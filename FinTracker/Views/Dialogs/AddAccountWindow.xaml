@@ -1,0 +1,46 @@
+﻿<Window x:Class="FinTracker.Views.AddAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinTracker.Views"
+        mc:Ignorable="d"
+        Title="AddAccount" Background="#FF353434" Height="450" Width="360" ResizeMode="NoResize" WindowStyle="None">
+
+    <Grid Margin="0,-3,0,3">
+        <Label Content="Добавить счет"
+               HorizontalAlignment="Center"
+               Margin="0,10,0,0"
+               VerticalAlignment="Top"
+               Foreground="White"
+               FontFamily="Manrope"
+               FontSize="20"/>
+        <TextBlock Text="Введите название счета"
+                   HorizontalAlignment="Center"
+                   Margin="0,187,0,0"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Top"
+                   Width="220"
+                   FontFamily="Manrope"
+                   Foreground="White"
+                   FontWeight="ExtraLight"
+                   FontSize="16"/>
+        <TextBox  x:Name="TargetInput"
+                  Text="{Binding Name, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
+                  HorizontalAlignment="Center"
+                  Margin="0,225,0,0"
+                  TextWrapping="Wrap"
+                  VerticalAlignment="Top"
+                  Width="220"
+                  TextChanged="TextBox_TextChanged"
+                  Height="22"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,403,0,0">
+            <Hyperlink Click="AcceptButton_Click"
+                       TextDecorations="None"
+                       Foreground="White"
+                       FontFamily="Manrope" FontSize="20" FontWeight="SemiBold">
+                       Готово
+            </Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>
