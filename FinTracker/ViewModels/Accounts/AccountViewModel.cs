@@ -41,6 +41,7 @@ namespace FinTracker.ViewModels
         }
 
         public ICommand RelayCommand { get; }
+
         public ICommand No { get; }
         public AccountViewModel()
         {

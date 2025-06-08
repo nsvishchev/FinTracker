@@ -48,6 +48,7 @@ namespace FinTracker
                 OnPropertyChanged(nameof(CollectedAmount));
             }
         }
+        
         public async Task AddTargetAsync()
         {
             try
@@ -64,7 +65,6 @@ namespace FinTracker
                     await db.Targets.AddAsync(target);
 
                     await db.SaveChangesAsync();
-
                     MessageBox.Show("Цель успешно сохранена!");
                 }
             }

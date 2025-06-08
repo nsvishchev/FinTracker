@@ -38,6 +38,8 @@ namespace FinTracker
         private void AddOpertationButton_Click(object sender, RoutedEventArgs e)
         {
             AddOperationWindow addOperationWindow = new AddOperationWindow();
+            addOperationWindow.Owner = this;
+            addOperationWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             addOperationWindow.Show();
         }
         private void ViewAllAccountList_Button_Click(object sender, RoutedEventArgs e)
@@ -68,13 +70,16 @@ namespace FinTracker
         }
         private void CreateTargetButton_Click(object sender, RoutedEventArgs e)
         {
+            TargetWindow_Loaded(sender, e);
             var AddTargetWindow = new AddTargetWindow();
             AddTargetWindow.Owner = this;
             AddTargetWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-            AddTargetWindow.Show();
-            TargetWindow_Loaded(sender, e);
+            //TargetWindow_Loaded(sender, e);
+            var vm = (MainViewModel)this.DataContext;
+            vm.TargetVM.LoadTargetAsync();
 
+            AddTargetWindow.ShowDialog();
             NoTargetPanel.Visibility = Visibility.Collapsed;
             YesTargetPanel.Visibility = Visibility.Visible;
         }
@@ -88,8 +93,33 @@ namespace FinTracker
             var MainViewModel = new MainViewModel();
             MainViewModel.TargetVM.DeleteTargetAsync();
 
+
             NoTargetPanel.Visibility = Visibility.Visible;
             YesTargetPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void DeleteAccount_Button_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAccountWindow deleteAccountWindow = new DeleteAccountWindow();
+            deleteAccountWindow.Owner = this;
+            deleteAccountWindow.WindowStartupLocation= WindowStartupLocation.CenterOwner;
+            deleteAccountWindow.Show();
+        }
+
+        private void OpertationsHistory_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewTransactions = new ViewTransactions();
+            viewTransactions.Owner = this;
+            viewTransactions.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            viewTransactions.Show();
+        }
+
+        private void MoneyTransfer_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var sendMoneyWindow = new SendMoneyWindow();
+            sendMoneyWindow.Owner = this;
+            sendMoneyWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            sendMoneyWindow.Show();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinTracker.ViewModels.Transactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,13 @@ namespace FinTracker.Views.Dialogs
         public ViewTransactions()
         {
             InitializeComponent();
+            DataContext = new TransactrionViewModel();
+            Loaded += async (sender, args) => await ((TransactrionViewModel)DataContext).LoadTransactionsAsync();
+
+        }
+        public void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

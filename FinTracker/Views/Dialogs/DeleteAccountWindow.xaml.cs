@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FinTracker.Data;
+using FinTracker.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +25,19 @@ namespace FinTracker.Views.Dialogs
         public DeleteAccountWindow()
         {
             InitializeComponent();
+            var services = new ServiceCollection();
+            services.AddDbContext<AppDbContext>();
+            services.AddTransient<DeleteAccountViewModel>();
+            var provider = services.BuildServiceProvider();
+            DataContext = provider.GetRequiredService<DeleteAccountViewModel>();
         }
+
+        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAccountViewModel deleteAccointViewModel = (DeleteAccountViewModel)DataContext;
+            deleteAccointViewModel.DeleteAccount();
+            this.Close();
+        }
+
     }
 }

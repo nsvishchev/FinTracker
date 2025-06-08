@@ -1,4 +1,8 @@
-﻿using FinTracker.ViewModels.Accounts;
+﻿using FinTracker.Data;
+using FinTracker.ViewModels;
+using FinTracker.ViewModels.Accounts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +27,18 @@ namespace FinTracker.Views.Dialogs
         public AddOperationWindow()
         {
             InitializeComponent();
-            this.DataContext = new AddOperationViewModel();
-            Loaded += async (sender, args) => await ((AddOperationViewModel)DataContext).LoadData();
+            var services = new ServiceCollection();
+            services.AddDbContext<AppDbContext>();
+            services.AddTransient<AddOperationViewModel>();
+            var provider = services.BuildServiceProvider();
+            DataContext = provider.GetRequiredService<AddOperationViewModel>();
+
         }
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
         {
+            AddOperationViewModel viewModel = (AddOperationViewModel)DataContext;
+            viewModel.ExecuteOperation();
             this.Close();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

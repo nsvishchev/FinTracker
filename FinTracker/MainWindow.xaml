@@ -47,51 +47,39 @@
                 FontWeight="UltraLight" 
                 Click="AddAccount_Button_Click"
         />
-        <Button x:Name="ViewAllAccountList_Button" 
-                Content="Показать список счетов" 
-                HorizontalAlignment="Center" 
-                Margin="0,331,0,0" 
-                VerticalAlignment="Top" 
-                Width="234" Height="34" 
-                Foreground="White" 
-                Background="#FF696868" 
-                FontFamily="Manrope" 
-                FontWeight="UltraLight" 
-                Click="ViewAllAccountList_Button_Click"
-        />
         <Button x:Name="MoneyTransfer_Button" 
                 Content="Перевод между счетами" 
                 HorizontalAlignment="Center" 
-                Margin="0,412,0,0" 
+                Margin="0,324,0,0" 
                 VerticalAlignment="Top" 
                 Width="234" Height="34" 
                 Foreground="White" 
                 Background="#FF696868" 
                 FontFamily="Manrope" 
-                FontWeight="UltraLight"
+                FontWeight="UltraLight" Click="MoneyTransfer_Button_Click"
         />
         <Button x:Name="DeleteAccount_Button" 
                 Content="Удалить счет" 
                 HorizontalAlignment="Center" 
-                Margin="0,493,0,0" 
+                Margin="0,398,0,0" 
                 VerticalAlignment="Top" 
                 Width="234" Height="34" 
                 Foreground="White" 
                 Background="#FF696868" 
                 FontFamily="Manrope" 
-                FontWeight="UltraLight"
+                FontWeight="UltraLight" Click="DeleteAccount_Button_Click"
         />
         <Button x:Name="OpertationsHistory_Button" 
                 Content="История операций" 
                 HorizontalAlignment="Center" 
-                Margin="0,574,0,0" 
+                Margin="0,470,0,0" 
                 VerticalAlignment="Top" 
                 Width="234" 
                 Height="34" 
                 Foreground="White" 
                 Background="#FF696868" 
                 FontFamily="Manrope" 
-                FontWeight="UltraLight"
+                FontWeight="UltraLight" Click="OpertationsHistory_Button_Click"
         />
         <Border x:Name="TargetBorder" 
                 Background ="#FF696868" 
@@ -100,7 +88,7 @@
                 HorizontalAlignment="Left" 
                 Width ="359" 
                 Height="254" 
-                Margin="515,141,0,0" 
+                Margin="509,214,0,0" 
                 VerticalAlignment="Top" 
                 Grid.Column="1">
 
@@ -162,7 +150,7 @@
                 BorderThickness="1" 
                 Width ="359" 
                 Height="253" 
-                Margin="55,141,0,0" 
+                Margin="57,215,0,0" 
                 VerticalAlignment="Top" 
                 Grid.Column="1" HorizontalAlignment="Left" >
 
@@ -184,22 +172,8 @@
             </Grid>
 
         </Border>
-        <Border x:Name="LastOperationList"
-                Background ="#FF696868" 
-                BorderBrush="#FF989393" 
-                BorderThickness="1" 
-                Width ="359" 
-                Height="253" 
-                Margin="515,461,0,0" 
-                VerticalAlignment="Top" 
-                Grid.Column="1" HorizontalAlignment="Left" >
-
-            <Grid>
-                <TextBlock Text="Последние операции" Foreground="White" FontFamily="Manrope" FontSize="20" FontWeight="Medium" Margin="74,10,75,211" />
-            </Grid>
-
-        </Border>
-        <Ellipse HorizontalAlignment="Center" Height="1" Margin="0,468,0,0" Stroke="Black" VerticalAlignment="Top" Width="234"/>
+       
+        <Ellipse HorizontalAlignment="Center" Height="2" Margin="0,376,0,0" Stroke="Black" VerticalAlignment="Top" Width="234"/>
     </Grid>
 
 </Window>

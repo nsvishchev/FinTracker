@@ -4,9 +4,89 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinTracker.Views.Dialogs"
+        xmlns:vm="clr-namespace:FinTracker.ViewModels" xmlns:transactions="clr-namespace:FinTracker.ViewModels.Transactions" d:DataContext="{d:DesignInstance Type=transactions:TransactrionViewModel}"
         mc:Ignorable="d"
-        Title="ViewTransactions" Height="450" Width="800">
+        Title="Просмотр транзакций" 
+        Background="#FF353434" 
+        Height="450" 
+        Width="360" 
+        ResizeMode="NoResize" 
+        WindowStyle="None">
+
+
+
+    <Window.Resources>
+        <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF353434"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Manrope"/>
+            <Setter Property="BorderBrush" Value="#FF555555"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="47"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="История транзакций" 
+               Grid.Row="0"
+               HorizontalAlignment="Center" 
+               Margin="0,10,0,0" 
+               VerticalAlignment="Top" 
+               Foreground="White" 
+               FontFamily="Manrope" 
+               FontSize="20" 
+               Height="37"/>
+
+        <DataGrid ItemsSource="{Binding Transactions}"
+                  Grid.Row="1"
+                  Margin="10,10,10,10"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  Background="#FF353434"
+                  Foreground="White"
+                  BorderBrush="#FF555555"
+                  RowBackground="#FF454545"
+                  AlternatingRowBackground="#FF404040"
+                  ColumnHeaderHeight="30"
+                  RowHeight="25">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип" 
+                                  Binding="{Binding Operation}" 
+                                  Width="85"
+                                  HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"/>
+                <DataGridTextColumn Header="Счет" 
+                                  Binding="{Binding Account}" 
+                                  Width="150"
+                                  HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"/>
+                <DataGridTextColumn Header="Сумма" 
+                                  Binding="{Binding Amount, StringFormat={}{0:N2}₽}" 
+                                  Width="0.7*"
+                                  HeaderStyle="{StaticResource DataGridColumnHeaderStyle}"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="2"
+                Content="Закрыть"
+                Click="AcceptButton_Click"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Margin="0,6,0,0" 
+                Height="28" 
+                Width="100"
+                Foreground="White"
+                FontFamily="Manrope" 
+                FontSize="16" 
+                FontWeight="SemiBold"
+                Background="Transparent"
+                BorderBrush="Transparent"/>
     </Grid>
 </Window>

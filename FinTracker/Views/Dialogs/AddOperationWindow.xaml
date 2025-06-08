@@ -17,8 +17,10 @@
             </Hyperlink>
         </TextBlock>
         <TextBlock Text="Укажите сумму" HorizontalAlignment="Center" Margin="0,267,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" FontFamily="Manrope" Foreground="White" FontWeight="ExtraLight" FontSize="16"/>
-        <TextBox  x:Name="TargetInput" Text="{}" HorizontalAlignment="Center" Margin="0,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" TextChanged="TextBox_TextChanged" Height="22"/>
-        <ComboBox ItemsSource="{Binding ComboItems}" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Width="220" Height="22"/>
+        <TextBox  x:Name="TargetInput" Text="{Binding Amount, StringFormat=N2}" HorizontalAlignment="Center" Margin="0,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" Height="22"/>
+        <ComboBox ItemsSource="{Binding AccountNames}" SelectedItem="{Binding SelectedAccountName}" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Width="220" Height="22"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" FontFamily="Manrope" Foreground="White" FontWeight="ExtraLight" FontSize="16" Height="23"><Run Language="ru-ru" Text="Выберите счет"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+        <ComboBox ItemsSource="{Binding OperationTypes}" SelectedItem="{Binding SelectedOperationType}" HorizontalAlignment="Center" Margin="0,218,0,0" VerticalAlignment="Top" Width="220" Height="22"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220" FontFamily="Manrope" Foreground="White" FontWeight="ExtraLight" FontSize="16" Height="23"><Run Language="ru-ru" Text="Выберите действие"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
     </Grid>
 </Window>

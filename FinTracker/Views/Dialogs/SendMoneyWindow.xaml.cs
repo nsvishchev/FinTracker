@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FinTracker.Data;
+using FinTracker.ViewModels;
+using FinTracker.ViewModels.Transactions;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +26,17 @@ namespace FinTracker.Views.Dialogs
         public SendMoneyWindow()
         {
             InitializeComponent();
+            var services = new ServiceCollection();
+            services.AddDbContext<AppDbContext>();
+            services.AddTransient<SendMoneyViewModel>();
+            var provider = services.BuildServiceProvider();
+            DataContext = provider.GetRequiredService<SendMoneyViewModel>();
+        }
+        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendMoneyViewModel sendMoneyViewModel = (SendMoneyViewModel)DataContext;
+            sendMoneyViewModel.ExecuteTransferAsync();
+            this.Close();
         }
     }
 }

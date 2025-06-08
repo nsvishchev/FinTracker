@@ -24,6 +24,10 @@ namespace FinTracker
 
             _ = model.AddTargetAsync();
 
+            var model2 = new MainWindow();
+            //model2.NoTargetPanel.Visibility = Visibility.Collapsed;
+           // model2.YesTargetPanel.Visibility = Visibility.Visible;
+
             this.Close();
         }
 

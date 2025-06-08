@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinTracker.Views.Dialogs"
         mc:Ignorable="d"
-        Title="DeleteAccountWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="DeleteAccountWindow" Background="#FF353434" Height="450" Width="360" ResizeMode="NoResize" WindowStyle="None">
+
+    <Grid Margin="0,-3,0,3">
+        <Label Content="Удалить счет"
+           HorizontalAlignment="Center"
+           Margin="0,10,0,0"
+           VerticalAlignment="Top"
+           Foreground="White"
+           FontFamily="Manrope"
+           FontSize="20"/>
+        <TextBlock Text="Выберите счет для удаления"
+               HorizontalAlignment="Center"
+               Margin="0,187,0,0"
+               TextWrapping="Wrap"
+               VerticalAlignment="Top"
+               Width="220"
+               FontFamily="Manrope"
+               Foreground="White"
+               FontWeight="ExtraLight"
+               FontSize="16"/>
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,403,0,0">
+        <Hyperlink Click="AcceptButton_Click"
+                   TextDecorations="None"
+                   Foreground="White"
+                   FontFamily="Manrope" FontSize="20" FontWeight="SemiBold">
+                   Готово
+        </Hyperlink>
+        </TextBlock>
+        <ComboBox ItemsSource="{Binding AccountNames}" SelectedItem="{Binding SelectedAccountName}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="220" />
     </Grid>
 </Window>

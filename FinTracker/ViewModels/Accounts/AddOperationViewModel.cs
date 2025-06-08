@@ -1,51 +1,146 @@
 ﻿using FinTracker.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
-namespace FinTracker.ViewModels.Accounts
+namespace FinTracker.ViewModels
 {
     public class AddOperationViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<string> _comboItems = new();
+        private readonly AppDbContext _context;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public ObservableCollection<string> ComboItems
+        // Свойства для ComboBox с типами операций
+        public ObservableCollection<string> OperationTypes { get; } = new ObservableCollection<string>
         {
-            get => _comboItems;
+            "Пополнить",
+            "Списать"
+        };
+
+        private string _selectedOperationType;
+        public string SelectedOperationType
+        {
+            get => _selectedOperationType;
             set
             {
-                if (_comboItems != value)
-                {
-                    _comboItems = value;
-                    NotifyPropertyChanged();
-                }
+                _selectedOperationType = value;
+                OnPropertyChanged(nameof(SelectedOperationType));
+                // Можно добавить дополнительную логику при изменении выбора
             }
         }
 
-        public async Task LoadData()
+        // Свойства для ComboBox со счетами
+        public ObservableCollection<string> AccountNames { get; set; }
+        private string _selectedAccountName;
+        public string SelectedAccountName
         {
-            using var context = new AppDbContext();
-
-            // Получение списка имен сущностей из базы данных
-            var entitiesNames = await context.Accounts.Select(e => e.Name).ToListAsync();
-
-            ComboItems.Clear(); // Очистка текущего списка
-            foreach (var name in entitiesNames)
+            get => _selectedAccountName;
+            set
             {
-                ComboItems.Add(name);
+                _selectedAccountName = value;
+                OnPropertyChanged(nameof(SelectedAccountName));
             }
         }
 
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        private decimal _amount;
+        public decimal Amount
+        {
+            get => _amount;
+            set
+            {
+                _amount = value;
+                OnPropertyChanged(nameof(Amount));
+            }
+        }
+
+        public AddOperationViewModel(AppDbContext context)
+        {
+            _context = context;
+            SelectedOperationType = OperationTypes.First(); // Устанавливаем первый элемент по умолчанию
+            LoadAccountsAsync().ConfigureAwait(false);
+        }
+
+        public async Task LoadAccountsAsync()
+        {
+            try
+            {
+                var names = await _context.Accounts
+                    .OrderBy(a => a.Name)
+                    .Select(a => a.Name)
+                    .ToListAsync();
+
+                AccountNames = new ObservableCollection<string>(names);
+                OnPropertyChanged(nameof(AccountNames));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки счетов: {ex.Message}");
+            }
+        }
+
+        public async Task ExecuteOperation()
+        {
+            if (string.IsNullOrEmpty(SelectedAccountName) || Amount <= 0)
+            {
+                MessageBox.Show("Выберите счет и укажите сумму больше нуля");
+                return;
+            }
+
+            try
+            {
+                var account = await _context.Accounts
+                    .FirstOrDefaultAsync(a => a.Name == SelectedAccountName);
+
+                if (account == null)
+                {
+                    MessageBox.Show("Счет не найден");
+                    return;
+                }
+
+                if (SelectedOperationType == "Пополнить")
+                {
+                    account.Balance += Amount;
+
+                    var transaction = new Transaction
+                        { 
+                        Operation = "Пополнение",
+                        AccountId = account.Id,
+                        Amount = Amount 
+                        };
+                    _context.Transactions.Add(transaction);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    if (account.Balance < Amount)
+                    {
+                        MessageBox.Show("Недостаточно средств на счете");
+                        return;
+                    }
+                    account.Balance -= Amount;
+                    var transaction = new Transaction
+                    {
+                        Operation = "Списание",
+                        AccountId = account.Id,
+                        Amount = Amount
+                    };
+                    _context.Transactions.Add(transaction);
+                    _context.SaveChanges();
+                }
+
+                await _context.SaveChangesAsync();
+                MessageBox.Show("Операция выполнена успешно!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
